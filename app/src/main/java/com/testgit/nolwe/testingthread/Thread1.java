@@ -10,11 +10,9 @@ import android.os.Message;
 
 public class Thread1 implements Runnable {
     Handler inThreadHandler;
-    Handler handlerFromworkThread;
-    public Thread1(Handler handlerFromworkThread) {
-        this.handlerFromworkThread = handlerFromworkThread;
-        this.inThreadHandler = inThreadHandler;
-
+    Handler handlerFromWorkThread;
+    public Thread1(Handler handlerFromWorkThread) {
+        this.handlerFromWorkThread = handlerFromWorkThread;
     }
 
     @Override
@@ -25,20 +23,31 @@ public class Thread1 implements Runnable {
             @Override
             public void handleMessage(Message msg) {
                 System.out.println("handle from UI "+msg.arg1);
+                longOperationStart();
             }
         };
         Looper.loop();
+
+
+
+        return;
+    }
+
+    private void longOperationStart() {
         try {
-        int i = 0;
+            int i = 0;
             Message m = new Message();
+
             while (true && !Thread.currentThread().isInterrupted())
             {
 
-
+                System.out.println("running while");
                 i++;
+
                 m.arg1 = i;
 
-                handlerFromworkThread.sendMessage(m);
+                handlerFromWorkThread.sendMessage(m);
+
 
 
 
@@ -46,18 +55,19 @@ public class Thread1 implements Runnable {
 
 
             }
+
         }
         catch (InterruptedException e)
         {
             System.out.println("InterruptedException");
-            return;
+
         }
         finally {
             System.out.println("finally");
-            return;
-        }
 
+        }
     }
+
     public Handler getInThreadHandler( ) {
         return inThreadHandler;
     }

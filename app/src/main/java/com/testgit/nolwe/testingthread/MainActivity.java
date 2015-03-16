@@ -26,6 +26,7 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        System.out.println ("add some code in main");
     }
 
     public void start(View V)
@@ -59,7 +60,7 @@ public class MainActivity extends ActionBarActivity {
     {
 
         t1.interrupt();
-        t2.interrupt();
+        //t2.interrupt();
     }
     public void send(View V)
     {
@@ -67,6 +68,7 @@ public class MainActivity extends ActionBarActivity {
         m.arg1 = 100;
         Handler inThreadHandler = r1.getInThreadHandler();
         inThreadHandler.sendMessage(m);
+        //inThreadHandler.getLooper().quit();
     }
 
 
